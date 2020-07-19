@@ -22,9 +22,17 @@ go build -o fleektest ./cmd/server
 
 ### Docker
 
-Or if you prefer to run it inside docker container, don't forget to expose http server port and mount unencrypted/encrypted volumes to have something persistent.
+Or if you prefer to run it inside docker container.
 
 ```shell script
 docker build -t fleektest .
-docker run --rm --name fleektest -p 80:80 -v $PWD/data/unencrypted:/data/unencrypted -v $PWD/data/encrypted:/data/encrypted fleektest
+docker run --rm --name fleektest -p 80:80 fleektest
+```
+
+Since Inotify don't properly work with mounted volumes inside container, you can test by manually create files inside container.
+
+```shell script
+docker exec -it fleektest sh
+cd /data/unencrypted
+touch test.txt
 ```

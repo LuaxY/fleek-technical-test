@@ -46,9 +46,15 @@
         fetch("/list").then(res => {
             return res.json().then(json => {
                 tbody.textContent = "";
+
+                if (json.files == null) {
+                    return
+                }
+
                 json.files = json.files.sort(function (a, b) {
                     return a.name.localeCompare(b.name);
                 });
+
                 json.files.forEach(file => {
                     let clone = document.importNode(template.content, true);
                     let td = clone.querySelectorAll("td");
