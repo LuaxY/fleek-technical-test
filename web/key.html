@@ -21,9 +21,11 @@
 <script>
     function access() {
         const key = document.getElementById("key").value;
+        const urlParams = new URLSearchParams(window.location.search);
+        const filename = urlParams.get('filename');
 
-        // let's assume the '?filename=...' is present, just add '&key=...'
-        window.location.replace(window.location.href + "&key=" + key);
+        let url = location.protocol + '//' + location.host + location.pathname;
+        window.location.replace(url+ "?key=" + key + "&filename=" + filename);
     }
 </script>
 </body>

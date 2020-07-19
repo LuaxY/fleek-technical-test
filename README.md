@@ -35,4 +35,5 @@ Since Inotify don't properly work with mounted volumes inside container, you can
 docker exec -it fleektest sh
 cd /data/unencrypted
 touch test.txt
+# you can use 'vi' to set the content of file
 ```
