@@ -17,7 +17,7 @@ You can build and run the program directly on you computer if you have Golang in
 go get ./...
 go test ./...
 go build -o fleektest ./cmd/server
-./fleektest -p 8080 -src ./data/uncencrypted -dst ./data/encrypted
+./fleektest -p 8080 -src ./data/unencrypted -dst ./data/encrypted
 ```
 
 ### Docker

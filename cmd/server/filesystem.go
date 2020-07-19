@@ -15,6 +15,7 @@ import (
 	"fleek-technical-test/internal/store"
 )
 
+// watchFileSystem is the main loop that receive new disk event and start file mirroring and encryption
 func watchFileSystem(ctx context.Context, store store.Store, src, dst string) {
 	// tracker map is used to keep an track on last file hash of a file path
 	// this is useful to delete old encrypted file when original one is modified
@@ -87,7 +88,7 @@ loop:
 			case fs.Create:
 				// FIXME sleep 1 second to let filesystem finish to properly write file on disk
 				// otherwise the encryption will be corrupted, need to find a better alternative
-				time.Sleep(1*time.Second)
+				time.Sleep(1 * time.Second)
 
 				file, err := writeFile(event.Path, src, dst, store)
 
@@ -100,7 +101,7 @@ loop:
 				log.Println("file created:", file.Path(), file.Hash())
 			case fs.Write:
 				// FIXME same as create
-				time.Sleep(1*time.Second)
+				time.Sleep(1 * time.Second)
 
 				// retrieve previous hash of file
 				previousHash, exist := tracker[event.Path]
@@ -141,6 +142,7 @@ loop:
 	}
 }
 
+// writeFile handle mirroring and encryption of provided file and store it's key inside the provided store
 func writeFile(path, src, dst string, store store.Store) (*fs.File, error) {
 	input, err := os.Open(path)
 

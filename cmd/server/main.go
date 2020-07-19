@@ -50,6 +50,7 @@ func main() {
 		log.Fatalf("destination directory does not exist: %v", err)
 	}
 
+	// create in memory store that live during session
 	memoryStore, err := store.NewMemoryStore()
 
 	if err != nil {
@@ -58,12 +59,14 @@ func main() {
 
 	wg := sync.WaitGroup{}
 
+	// start filesystem watch for new disk event
 	wg.Add(1)
 	go func() {
 		watchFileSystem(ctx, memoryStore, src, dst)
 		wg.Done()
 	}()
 
+	// start web server to expose API that give access to the files
 	wg.Add(1)
 	go func() {
 		webServer(ctx, port, memoryStore, dst)
@@ -71,6 +74,4 @@ func main() {
 	}()
 
 	wg.Wait()
-
-	// TODO golang doc
 }

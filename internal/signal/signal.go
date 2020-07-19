@@ -10,6 +10,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// WatchInterrupt monitor system signals like Ctrl+C, or kill command to cancel provided context
+// a force shutdown delay is provided to let some cool down time to gracefully stop all works
 func WatchInterrupt(ctx context.Context, forceShutdownDelay time.Duration) context.Context {
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM, syscall.SIGKILL)

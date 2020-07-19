@@ -17,6 +17,7 @@ import (
 	"fleek-technical-test/internal/store"
 )
 
+// webServer if the main look for web server that expose API to access files through browser
 func webServer(ctx context.Context, port int, store store.Store, dst string) {
 	mux := http.NewServeMux()
 
@@ -51,6 +52,7 @@ func webServer(ctx context.Context, port int, store store.Store, dst string) {
 	}
 }
 
+// index handler returns home html page to list encrypted files
 func index(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./web/index.html")
 }
@@ -67,6 +69,7 @@ type FileInfo struct {
 	Key  string `json:"key"`
 }
 
+// list handler returns json encoded list of encrypted files
 func (h *handler) list(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
@@ -97,6 +100,8 @@ func (h *handler) list(w http.ResponseWriter, r *http.Request) {
 	_ = encoder.Encode(result)
 }
 
+// get handler returns decrypted requested file
+// if encryption key is not provided, an html form is sent to ask for the key
 func (h *handler) get(w http.ResponseWriter, r *http.Request) {
 	parts := strings.Split(r.URL.Path, "/")
 

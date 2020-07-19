@@ -9,6 +9,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// Event disk event operation like CREATE, WRITE, REMOVE, RENAME, with associated file path
 type Event struct {
 	Op   uint8
 	Path string
@@ -21,14 +22,17 @@ const (
 	Rename
 )
 
+// Watcher filesystem watcher component who notify of disk change event in targeted directories
 type Watcher struct {
 	ctx context.Context
 }
 
+// NewWatcher returns new filesystem watcher linked to provided context
 func NewWatcher(ctx context.Context) (*Watcher, error) {
 	return &Watcher{ctx: ctx}, nil
 }
 
+// Watch starts synchronous filesystem watcher for list of directories and fire event in provided channel
 func (w *Watcher) Watch(directories []string, events chan<- Event) error {
 	watcher, err := fsnotify.NewWatcher()
 
