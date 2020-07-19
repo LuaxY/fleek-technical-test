@@ -26,5 +26,5 @@ Or if you prefer to run it inside docker container, don't forget to expose http 
 
 ```shell script
 docker build -t fleektest .
-docker run --rm --name fleektest -p 80:80 -v $PWD/data/unencrypted -v $PWD/data/encrypted fleektest
+docker run --rm --name fleektest -p 80:80 -v $PWD/data/unencrypted:/data/unencrypted -v $PWD/data/encrypted:/data/encrypted fleektest
 ```
