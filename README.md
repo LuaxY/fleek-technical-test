@@ -2,7 +2,7 @@
 
 ## Build & Run
 
-Before running the program, you will need to create two directories, one for unencrypted content when you can put your own files and another one for encrypted mirror.
+Before running the program, you will need to create two directories, one for unencrypted content where you can put your own files and another one for encrypted mirror.
 
 ```shell script
 mkdir -p data/unencrypted
@@ -22,7 +22,7 @@ go build -o fleektest ./cmd/server
 
 ### Docker
 
-Or if you prefer to run it inside docker container, don't forget to export http server port and mount unencrypted/encrypted volumes to have something persistent.
+Or if you prefer to run it inside docker container, don't forget to expose http server port and mount unencrypted/encrypted volumes to have something persistent.
 
 ```shell script
 docker build -t fleektest .
