@@ -52,3 +52,9 @@ The download button already embed the decryption key in the link, but if you rem
 `/file/{HASH}?key={KEY}&filename={FILENAME}`
 
 `filename` is optional, without it, the filename will be the hash, but it's more convenient to have it when you download the file on your disk to be recognized natively.
+
+### Known bugs
+
+- When large file is placed inside source directory, Inotify trigger an event before the file is completely written on disk, I have put *quick & dirty* hack for small files by sleeping 1 second before processing the file, but this doesn't work for large files. I need to find a better solution for this part. When large file fully written in source directory, you can rename it to have it correctly encrypted.
+
+- Inotify don't seem to work with mounted volumes inside Docker container.
