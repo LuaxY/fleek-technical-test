@@ -1,5 +1,10 @@
 # Fleek Technical Test
 
+The purpose of this program is to create a mirror directory to encrypt data that is placed in the source directory.
+The program encrypts the files using the AES CTR algorithm with a unique 256-bit key for each file, as well as a unique identifier in the form of a SHA-256 hash of the contents and relative path of the file to avoid collisions with files with similar contents.
+
+The program run better on UNIX systems, but it can be executed inside container.
+
 ## Build & Run
 
 Before running the program, you will need to create two directories, one for unencrypted content where you can put your own files and another one for encrypted mirror.
@@ -37,3 +42,13 @@ cd /data/unencrypted
 touch test.txt
 # you can use 'vi' to set the content of file
 ```
+
+## Use
+
+If you haven't changed the default HTTP port, you can visit http://localhost/ to access the frontend of the application.
+The list is refreshed every 2 seconds, you can now drag'n'drop some files inside the source directory to see their encrypted copy in the list.
+The download button already embed the decryption key in the link, but if you remove it, a new page asking you to enter the key.
+
+`/file/{HASH}?key={KEY}&filename={FILENAME}`
+
+`filename` is optional, without it, the filename will be the hash, but it's more convenient to have it when you download the file on your disk to be recognized natively.
